@@ -22,11 +22,11 @@ PHP_FUNCTION(str_to_center){
 
     //r = strpprintf(0, "Your input: %s", str);
 
-	paddingLen = floor((((size_t)80) - str_len) / 2)
+	paddingLen = floor((((size_t)80) - str_len) / 2);
 
-	pointers = repeatStr(' ', ((size_t)paddingLen))
+	pointers = repeatStr(' ', ((size_t)paddingLen));
 
-	r = strpprintf(0, "%s%s", pointers, str)
+	r = strpprintf(0, "%s%s", pointers, str);
 
     RETURN_STR();
 }
