@@ -2,14 +2,17 @@
 # include "config.h"
 #endif
 
+#include <math.h>
 #include "php.h"
 #include "ext/standard/info.h"
 
 #include "php_classified.h"
 
-PHP_FUNCTION(classified_encode){
+PHP_FUNCTION(str_to_center){
     char *str = "";
     size_t str_len = 0;
+	double paddingLen;
+	char *pointers;
     zend_string *r;
 
     ZEND_PARSE_PARAMETERS_START(0,1)
@@ -17,37 +20,35 @@ PHP_FUNCTION(classified_encode){
 		Z_PARAM_STRING(str, str_len)
     ZEND_PARSE_PARAMETERS_END();
 
-    r = strpprintf(0, "Your input: %s", str);
+    //r = strpprintf(0, "Your input: %s", str);
 
-    RETURN_STR(r);
+	paddingLen = floor((((size_t)80) - str_len) / 2)
+
+	pointers = repeatStr(' ', ((size_t)paddingLen))
+
+	r = strpprintf(0, "%s%s", pointers, str)
+
+    RETURN_STR();
 }
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_classified_encode, 0, 0, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, str, IS_STRING, 0, "\"\"")
-ZEND_END_ARG_INFO()
-
-PHP_FUNCTION(classified_decode) {
-    char *encodedStr = "";
-    size_t encodedStr_len = 0;
-    zend_string *r;
-
-    ZEND_PARSE_PARAMETERS_START(0,1)
-        Z_PARAM_OPTIONAL
-		Z_PARAM_STRING(encodedStr, encodedStr_len)
-    ZEND_PARSE_PARAMETERS_END();
-
-    r = strpprintf(0, "Your input: %s", encodedStr);
-
-    RETURN_STR(r);
+char *repeatStr (char *str, size_t count) {
+    if (count == 0) return NULL;
+    char *ret = malloc (strlen (str) * count + count);
+    if (ret == NULL) return NULL;
+    strcpy (ret, str);
+    while (--count > 0) {
+        strcat (ret, " ");
+        strcat (ret, str);
+    }
+    return ret;
 }
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_classified_decode, 0, 0, IS_STRING, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_str_to_center, 0, 0, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, str, IS_STRING, 0, "\"\"")
 ZEND_END_ARG_INFO()
 
 static const zend_function_entry classified_functions[] = {
-	PHP_FE(classified_encode, arginfo_classified_encode)
-	PHP_FE(classified_decode, arginfo_classified_decode)
+	PHP_FE(str_to_center, arginfo_str_to_center)
 	PHP_FE_END
 };
 
