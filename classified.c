@@ -25,6 +25,7 @@ PHP_FUNCTION(classified_encode){
 PHP_FUNCTION(classified_decode) {
     char *encodedStr = "";
     size_t encodedStr_len;
+    zend_string *r;
 
     ZEND_PARSE_PARAMETERS_START(0,1)
         Z_PARAM_OPTIONAL
