@@ -20,14 +20,12 @@ PHP_FUNCTION(str_to_center){
 		Z_PARAM_STRING(str, str_len)
     ZEND_PARSE_PARAMETERS_END();
 
-    //r = strpprintf(0, "Your input: %s", str);
+    paddingLen = (size_t)floor((((size_t)80) - str_len) / 2);
 
-	paddingLen = (size_t)floor((((size_t)80) - str_len) / 2);
-
-	char *ret = malloc (strlen (' ') * paddingLen + paddingLen);
-	strcpy (ret, ' ');
+	char *ret = malloc (strlen(" ") * paddingLen + paddingLen);
+	strcpy (ret, " ");
 	while (--paddingLen > 0) {
-		strcat(ret, ' ');
+		strcat(ret, " ");
 	}
 
 	r = strpprintf(0, "%s%s", ret, str);
