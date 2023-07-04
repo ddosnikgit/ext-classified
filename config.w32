@@ -1,0 +1,5 @@
+ARG_ENABLE("classified", "enable Classified-C Library", "no");
+
+if (PHP_CLASSIFIED != "no") {
+	EXTENSION("classified", "classified.c", PHP_CLASSIFIED_SHARED);
+}
