@@ -11,7 +11,7 @@
 PHP_FUNCTION(str_to_center){
     char *str = "";
     size_t str_len = 0;
-	double paddingLen;
+	size_t paddingLen;
 	char *pointers;
     zend_string *r;
 
@@ -22,25 +22,17 @@ PHP_FUNCTION(str_to_center){
 
     //r = strpprintf(0, "Your input: %s", str);
 
-	paddingLen = floor((((size_t)80) - str_len) / 2);
+	paddingLen = (size_t)floor((((size_t)80) - str_len) / 2);
 
-	pointers = repeatStr(' ', ((size_t)paddingLen));
+	char *ret = malloc (strlen (' ') * paddingLen + paddingLen);
+	strcpy (ret, ' ');
+	while (--paddingLen > 0) {
+		strcat(ret, ' ');
+	}
 
-	r = strpprintf(0, "%s%s", pointers, str);
+	r = strpprintf(0, "%s%s", ret, str);
 
-    RETURN_STR();
-}
-
-char *repeatStr (char *str, size_t count) {
-    if (count == 0) return NULL;
-    char *ret = malloc (strlen (str) * count + count);
-    if (ret == NULL) return NULL;
-    strcpy (ret, str);
-    while (--count > 0) {
-        strcat (ret, " ");
-        strcat (ret, str);
-    }
-    return ret;
+    RETURN_STR(r);
 }
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_str_to_center, 0, 0, IS_STRING, 0)
