@@ -8,7 +8,7 @@ A simple extension for PHP to work with strings.
 git clone https://github.com/ddosnikgit/ext-classified.git
 cd ext-classified
 phpize
-./configure --enable-streamfd
+./configure --enable-classified
 make && make test && sudo make install
 ```
 
