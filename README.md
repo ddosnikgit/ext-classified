@@ -16,4 +16,6 @@ make && make test && sudo make install
 
 The extension adds only one (for now) new PHP function:
 
-``str_to_center(string $string = "") : string``
+```php
+function str_to_center(string $string = "") : string
+```
